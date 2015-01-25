@@ -3,7 +3,7 @@ import dropbox
 
 # Parsing the config file can be done in a better way
 def using_oauth():
-    with open('dropbox_oauth.config', 'r') as conf_file:
+    with open('oauth.config', 'r') as conf_file:
         app_key = conf_file.readline().strip()
         app_secret = conf_file.readline().strip()
 
@@ -23,7 +23,7 @@ def using_oauth():
 
 
 def __using_token():
-    with open('dropbox_token.config', 'r') as token_file:
+    with open('token.config', 'r') as token_file:
         token = token_file.readline().strip()
 
     return token
