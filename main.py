@@ -6,7 +6,7 @@ import os
 import authenticate
 import upload
 
-access_token = authenticate.using_token()
+access_token = authenticate.using_oauth()
 
 # Logic for invalid token
 

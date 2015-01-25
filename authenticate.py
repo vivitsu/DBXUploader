@@ -16,17 +16,13 @@ def using_oauth():
     print('3. Copy the authorization code.')
     code = input("Enter the authorization code here: ").strip()
 
-    print(code)
     # This will fail if the user enters an invalid authorization code
     access_token, user_id = flow.finish(code)
-
-    print(access_token)
-    print(user_id)
 
     return access_token
 
 
-def using_token():
+def __using_token():
     with open('dropbox_token.config', 'r') as token_file:
         token = token_file.readline().strip()
 
