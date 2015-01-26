@@ -9,6 +9,11 @@ Usage
 ```shell
 $ python3 main.py url
 ```
+Dependencies
+------------
+
+The official Dropbox Python SDK, available [here](https://www.dropbox.com/developers/core/sdks/python). You can install
+it system-wide, or setup a virtualenv and have it be local to the application directory.
 
 Features
 --------
