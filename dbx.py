@@ -38,7 +38,7 @@ class DBX(object):
         access_token, user_id = flow.finish(code)
 
         with open(DBX.TOKEN_FILE, 'w') as token_file:
-            print(access_token, file=token_file)
+            token_file.write(access_token)
 
         return access_token
 

@@ -8,8 +8,7 @@
 __pycache__/
 
 # Ignore virtualenv files
-dbxenv/
-venv/
+env/
 
 # Ignore config files
 *.config
