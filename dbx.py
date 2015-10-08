@@ -5,15 +5,15 @@ import sys
 
 class DBX(object):
 
-    TOKEN_FILE = 'token.config'
-    OAUTH_FILE = 'oauth.config'
+    TOKEN_FILE = "token.config"
+    OAUTH_FILE = "oauth.config"
     access_token = None
 
     def __init__(self):
         self.__authenticate()
 
     def __authenticate(self):
-        if os.path.exists('token.config'):
+        if os.path.exists("token.config"):
             self.access_token = DBX.__authenticate_using_token()
         else:
             self.access_token = DBX.__authenticate_using_oauth()
@@ -21,7 +21,7 @@ class DBX(object):
     # Parsing the config file can be done in a better way
     @staticmethod
     def __authenticate_using_oauth():
-        with open(DBX.OAUTH_FILE, 'r') as conf_file:
+        with open(DBX.OAUTH_FILE, "r") as conf_file:
             app_key = conf_file.readline().strip()
             app_secret = conf_file.readline().strip()
 
@@ -29,22 +29,22 @@ class DBX(object):
 
         # Have the user sign in and authorize this token
         authorize_url = flow.start()
-        print('1. Go to: ' + authorize_url)
-        print('2. Click "Allow" (you might have to log in first)')
-        print('3. Copy the authorization code.')
+        print "1. Go to: %s" % authorize_url
+        print "2. Click \"Allow\" (you might have to log in first)"
+        print "3. Copy the authorization code."
         code = input("Enter the authorization code here: ").strip()
 
         # This will fail if the user enters an invalid authorization code
         access_token, user_id = flow.finish(code)
 
-        with open(DBX.TOKEN_FILE, 'w') as token_file:
+        with open(DBX.TOKEN_FILE, "w") as token_file:
             token_file.write(access_token)
 
         return access_token
 
     @staticmethod
     def __authenticate_using_token():
-        with open('token.config', 'r') as token_file:
+        with open("token.config", 'r') as token_file:
             access_token = token_file.readline().strip()
 
         return access_token
@@ -54,10 +54,10 @@ class DBX(object):
         if os.path.exists(DBX.TOKEN_FILE):
             os.remove(DBX.TOKEN_FILE)
         else:
-            print('Token file not found.')
+            print "Token file not found."
 
     def __retry_if_access_revoked(self, filename):
-        print('Access to the app has been revoked. Retrying...')
+        print "Access to the app has been revoked. Retrying..."
         self.__authenticate()
         self.upload(filename)
 
@@ -66,15 +66,15 @@ class DBX(object):
             client = dropbox.client.DropboxClient(self.access_token)
         except ValueError as verr:
             self.__remove_cached_token()
-            print(verr)
-            print('Please try again.')
+            print verr
+            print "Please try again."
             sys.exit(1)
 
-        path = '/' + filename
-        f = open(filename, 'rb')
+        path = "/" + filename
+        f = open(filename, "rb")
         try:
             response = client.put_file(path, f)
-            print(response)
+            print response
         except dropbox.rest.ErrorResponse as err:
             raise err
 
@@ -86,5 +86,5 @@ class DBX(object):
                 self.__remove_cached_token()
                 self.__retry_if_access_revoked(filename)
             else:
-                print(e.reason)
+                print e.reason
 
